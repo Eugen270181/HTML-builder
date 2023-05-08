@@ -1,8 +1,12 @@
 const fs = require('fs');
 const path = require('node:path');
-const stream = fs.createReadStream(path.join(__dirname, 'text.txt'), 'utf-8');
+const normalizePath = path.join(__dirname, 'text.txt');
+const { stdout } = process;
+
+stdout.write('"'+normalizePath+'" it\'s contains ==>\n');
+const Readstream = fs.createReadStream(normalizePath, 'utf-8');
 
 let data = '';
 
-stream.on('data', (chunk) => (data += chunk));
-stream.on('end', () => console.log(data));
+Readstream.on('data', (chunk) => (data += chunk));
+Readstream.on('end', () => stdout.write(data));
